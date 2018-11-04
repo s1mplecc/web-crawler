@@ -40,11 +40,10 @@ class HtmlParserTest {
     }
 
     @Test
-    void should_() throws IOException {
+    void should_parse_novel_content_from_html() throws IOException {
         String content = HtmlParser.parseContent(br2);
 
         assertThat(content).isNotEmpty();
         assertThat(content.startsWith("    ")).isTrue();
-//        assertThat(content.charAt(4)).isEqualTo("爱");
     }
 }
