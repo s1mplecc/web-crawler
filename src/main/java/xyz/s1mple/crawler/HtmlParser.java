@@ -6,23 +6,27 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class HtmlParser {
+    private static final String DIV_CONTENT = "<div id=\"content\">";
+    private static final String A_HREF = "<a href=\"/";
+    private static final String DIV_LIST = "<div id=\"list\">";
+    private static final String DIV_END = "</div>";
+
     public static List<String> parseChapterUris(BufferedReader html, String novelId) throws IOException {
-        String line;
         List<String> uris = new ArrayList<>();
         boolean isUris = false;
+        String line;
         while ((line = html.readLine()) != null) {
-            if (line.contains("<div id=\"list\">")) {
+            if (line.contains(DIV_LIST)) {
                 isUris = true;
                 continue;
             }
 
-            if (isUris && line.contains("</div>")) {
+            if (isUris && line.contains(DIV_END)) {
                 break;
             }
 
-            String href = "<a href=\"/";
-            if (isUris && line.contains(href)) {
-                String uri = line.substring(line.indexOf(href + novelId) + href.length(), line.indexOf("\">"));
+            if (isUris && line.contains(A_HREF)) {
+                String uri = line.substring(line.indexOf(A_HREF + novelId) + A_HREF.length(), line.indexOf("\">"));
                 uris.add(uri);
             }
         }
@@ -30,7 +34,33 @@ public class HtmlParser {
         return uris;
     }
 
-    public static void parseContent(String html) {
+    public static String parseContent(BufferedReader html) throws IOException {
+        StringBuilder content = new StringBuilder();
+        boolean isContent = false;
+        String line;
+        while ((line = html.readLine()) != null) {
+            if (line.contains(DIV_CONTENT)) {
+                isContent = true;
+                append(content, line.trim().substring(DIV_CONTENT.length()).trim());
+                continue;
+            }
 
+            if (isContent && line.contains(DIV_END)) {
+                break;
+            }
+
+            if (isContent) {
+                append(content, line);
+            }
+        }
+
+        return content.toString();
+    }
+
+    private static void append(StringBuilder content, String line) {
+        String replaceLine = line.trim()
+                .replaceAll("&nbsp;", " ")
+                .replaceAll("<br\\s*/>", "\r\n");
+        content.append(replaceLine);
     }
 }
