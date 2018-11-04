@@ -1,17 +1,22 @@
 package xyz.s1mple.crawler;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class HtmlParser {
+    public static final Logger log = LoggerFactory.getLogger(HtmlParser.class);
+
     private static final String DIV_CONTENT = "<div id=\"content\">";
     private static final String A_HREF = "<a href=\"/";
     private static final String DIV_LIST = "<div id=\"list\">";
     private static final String DIV_END = "</div>";
 
-    public static List<String> parseChapterUris(BufferedReader html, String novelId) throws IOException {
+    public static List<String> parseChapterUris(BufferedReader html, String novelIndex) throws IOException {
         List<String> uris = new ArrayList<>();
         boolean isUris = false;
         String line;
@@ -26,7 +31,7 @@ public class HtmlParser {
             }
 
             if (isUris && line.contains(A_HREF)) {
-                String uri = line.substring(line.indexOf(A_HREF + novelId) + A_HREF.length(), line.indexOf("\">"));
+                String uri = line.substring(line.indexOf(A_HREF + novelIndex) + A_HREF.length(), line.indexOf("\">"));
                 uris.add(uri);
             }
         }
@@ -46,6 +51,7 @@ public class HtmlParser {
             }
 
             if (isContent && line.contains(DIV_END)) {
+                append(content, line.substring(0, line.lastIndexOf(DIV_END)).trim());
                 break;
             }
 
