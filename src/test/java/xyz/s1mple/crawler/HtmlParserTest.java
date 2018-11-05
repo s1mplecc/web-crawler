@@ -1,5 +1,7 @@
 package xyz.s1mple.crawler;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import xyz.s1mple.crawler.core.HtmlParser;
 
@@ -12,7 +14,7 @@ class HtmlParserTest {
     private BufferedReader br1;
     private BufferedReader br2;
 
-    @org.junit.jupiter.api.BeforeEach
+    @BeforeEach
     void setUp() throws FileNotFoundException, UnsupportedEncodingException {
         br1 = bufferReaderBy("test-parseChapterUris.html");
         br2 = bufferReaderBy("test-parseContent.html");
@@ -23,7 +25,7 @@ class HtmlParserTest {
                 new File(HtmlParserTest.class.getClassLoader().getResource(filename).getPath())), "GBK"));
     }
 
-    @org.junit.jupiter.api.AfterEach
+    @AfterEach
     void tearDown() throws IOException {
         br1.close();
         br2.close();
