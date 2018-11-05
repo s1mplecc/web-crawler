@@ -45,4 +45,11 @@ class HtmlParserTest {
         assertThat(content).isNotEmpty();
         assertThat(content).startsWith("    炎炎夏日");
     }
+
+    @Test
+    void should_parse_novel_title_from_html() throws IOException {
+        String title = new HtmlParser().parseTitle(br1);
+
+        assertThat(title).isEqualTo("三寸人间");
+    }
 }

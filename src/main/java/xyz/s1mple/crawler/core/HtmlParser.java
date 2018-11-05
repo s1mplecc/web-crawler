@@ -1,20 +1,27 @@
 package xyz.s1mple.crawler.core;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class HtmlParser {
-    private static final Logger log = LoggerFactory.getLogger(HtmlParser.class);
-
     private static final String DIV_CONTENT = "<div id=\"content\">";
     private static final String A_HREF = "<a href=\"/";
     private static final String DIV_LIST = "<div id=\"list\">";
     private static final String DIV_END = "</div>";
+    private static final String H1 = "<h1>";
+    private static final String H1_END = "</h1>";
+
+    public String parseTitle(BufferedReader html) throws IOException {
+        String line;
+        while ((line = html.readLine()) != null) {
+            if (line.trim().matches(H1 + "\\S*" + H1_END)) {
+                return line.substring(line.indexOf(H1) + H1.length(), line.indexOf(H1_END));
+            }
+        }
+        return "";
+    }
 
     public List<String> parseChapterUris(BufferedReader html, String novelIndex) throws IOException {
         List<String> uris = new ArrayList<>();
