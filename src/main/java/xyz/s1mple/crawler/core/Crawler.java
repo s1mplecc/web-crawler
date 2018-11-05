@@ -3,6 +3,7 @@ package xyz.s1mple.crawler.core;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
@@ -23,9 +24,11 @@ public class Crawler {
     }
 
     public void run(String novelIndex) throws IOException, ExecutionException, InterruptedException {
-        List<String> uris = htmlParser.parseChapterUris(urlReader.read(PREFIX + novelIndex), novelIndex);
+        BufferedReader directoryHtml = urlReader.read(PREFIX + novelIndex);
+        String title = htmlParser.parseTitle(directoryHtml);
+        List<String> uris = htmlParser.parseChapterUris(directoryHtml, novelIndex);
         String contents = parseContentsFrom(uris);
-        new NovelWriter("./a.txt").write(contents);
+        new NovelWriter(String.format("./%s.txt", title)).write(contents);
     }
 
     private String parseContentsFrom(List<String> uris) throws InterruptedException, ExecutionException {
