@@ -23,7 +23,7 @@ public class Connector {
             connection = connect(url);
             return new BufferedReader(new InputStreamReader(connection.getInputStream(), GBK));
         } catch (IOException e) {
-            log.error(String.format("can not to connect url: %s", url));
+            log.error("can not to connect url: {}", url);
             e.printStackTrace();
         }
 

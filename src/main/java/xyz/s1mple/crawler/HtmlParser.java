@@ -36,8 +36,7 @@ public class HtmlParser {
             }
         }
 
-        System.out.println(String.format("共计 %d 章", uris.size()));
-        log.info(String.format("共计 %d 章", uris.size()));
+        log.info("共计 {} 章", uris.size());
 
         return uris;
     }
