@@ -1,4 +1,4 @@
-package xyz.s1mple.crawler;
+package xyz.s1mple.crawler.core;
 
 public class UrlCannotConnectException extends RuntimeException {
     public UrlCannotConnectException(String message) {

@@ -1,4 +1,4 @@
-package xyz.s1mple.crawler;
+package xyz.s1mple.crawler.core;
 
 import java.io.File;
 import java.io.FileWriter;

@@ -1,4 +1,4 @@
-package xyz.s1mple.crawler;
+package xyz.s1mple.crawler.core;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
