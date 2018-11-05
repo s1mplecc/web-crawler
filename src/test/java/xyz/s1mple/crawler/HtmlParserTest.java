@@ -30,7 +30,7 @@ class HtmlParserTest {
 
     @Test
     void should_parse_chapter_uris_from_html() throws IOException {
-        List<String> uris = HtmlParser.parseChapterUris(br1, "9/9434");
+        List<String> uris = new HtmlParser().parseChapterUris(br1, "9/9434");
 
         assertThat(uris).hasSize(321);
         assertThat(uris.get(0)).isEqualTo("9/9434/7418069.html");
@@ -38,8 +38,8 @@ class HtmlParserTest {
     }
 
     @Test
-    void should_parse_novel_content_from_html() {
-        String content = HtmlParser.parseContent(br2);
+    void should_parse_novel_content_from_html() throws IOException {
+        String content = new HtmlParser().parseContent(br2);
 
         assertThat(content).isNotEmpty();
         assertThat(content).startsWith("    炎炎夏日");

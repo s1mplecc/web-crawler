@@ -16,7 +16,7 @@ public class HtmlParser {
     private static final String DIV_LIST = "<div id=\"list\">";
     private static final String DIV_END = "</div>";
 
-    public static List<String> parseChapterUris(BufferedReader html, String novelIndex) throws IOException {
+    public List<String> parseChapterUris(BufferedReader html, String novelIndex) throws IOException {
         List<String> uris = new ArrayList<>();
         boolean isUris = false;
         String line;
@@ -41,33 +41,25 @@ public class HtmlParser {
         return uris;
     }
 
-    public static String parseContent(BufferedReader html) {
-        if (html == null) {
-            return "";
-        }
-
+    public String parseContent(BufferedReader html) throws IOException {
         StringBuilder content = new StringBuilder();
         boolean isContent = false;
         String line;
-        try {
-            while ((line = html.readLine()) != null) {
-                if (line.contains(DIV_CONTENT)) {
-                    isContent = true;
-                    append(content, line.trim().substring(DIV_CONTENT.length()).trim());
-                    continue;
-                }
-
-                if (isContent && line.contains(DIV_END)) {
-                    append(content, line.substring(0, line.lastIndexOf(DIV_END)).trim());
-                    break;
-                }
-
-                if (isContent) {
-                    append(content, line);
-                }
+        while ((line = html.readLine()) != null) {
+            if (line.contains(DIV_CONTENT)) {
+                isContent = true;
+                append(content, line.trim().substring(DIV_CONTENT.length()).trim());
+                continue;
             }
-        } catch (IOException e) {
-            log.error(e.getMessage());
+
+            if (isContent && line.contains(DIV_END)) {
+                append(content, line.substring(0, line.lastIndexOf(DIV_END)).trim());
+                break;
+            }
+
+            if (isContent) {
+                append(content, line);
+            }
         }
 
         return content.toString();
