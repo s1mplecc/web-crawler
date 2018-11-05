@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class HtmlParser {
-    public static final Logger log = LoggerFactory.getLogger(HtmlParser.class);
+    private static final Logger log = LoggerFactory.getLogger(HtmlParser.class);
 
     private static final String DIV_CONTENT = "<div id=\"content\">";
     private static final String A_HREF = "<a href=\"/";
@@ -36,28 +36,39 @@ public class HtmlParser {
             }
         }
 
+        System.out.println(String.format("共计 %d 章", uris.size()));
+        log.info(String.format("共计 %d 章", uris.size()));
+
         return uris;
     }
 
-    public static String parseContent(BufferedReader html) throws IOException {
+    public static String parseContent(BufferedReader html) {
+        if (html == null) {
+            return "";
+        }
+
         StringBuilder content = new StringBuilder();
         boolean isContent = false;
         String line;
-        while ((line = html.readLine()) != null) {
-            if (line.contains(DIV_CONTENT)) {
-                isContent = true;
-                append(content, line.trim().substring(DIV_CONTENT.length()).trim());
-                continue;
-            }
+        try {
+            while ((line = html.readLine()) != null) {
+                if (line.contains(DIV_CONTENT)) {
+                    isContent = true;
+                    append(content, line.trim().substring(DIV_CONTENT.length()).trim());
+                    continue;
+                }
 
-            if (isContent && line.contains(DIV_END)) {
-                append(content, line.substring(0, line.lastIndexOf(DIV_END)).trim());
-                break;
-            }
+                if (isContent && line.contains(DIV_END)) {
+                    append(content, line.substring(0, line.lastIndexOf(DIV_END)).trim());
+                    break;
+                }
 
-            if (isContent) {
-                append(content, line);
+                if (isContent) {
+                    append(content, line);
+                }
             }
+        } catch (IOException e) {
+            log.error(e.getMessage());
         }
 
         return content.toString();
