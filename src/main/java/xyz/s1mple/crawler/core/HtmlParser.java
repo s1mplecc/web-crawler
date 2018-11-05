@@ -36,8 +36,6 @@ public class HtmlParser {
             }
         }
 
-        log.info("共计 {} 章", uris.size());
-
         return uris;
     }
 
