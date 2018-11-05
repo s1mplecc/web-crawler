@@ -21,7 +21,7 @@ public class UrlReader {
             return new BufferedReader(new InputStreamReader(connect(url).getInputStream(), GBK));
         } catch (IOException ex) {
             log.error("can not to connect url: {}", url);
-            throw new UrlCannotConnectException(url, ex);
+            throw new UrlCannotConnectException(url);
         }
     }
 

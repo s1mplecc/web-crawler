@@ -23,11 +23,11 @@ public class Crawler {
 
     public void run(String novelIndex) throws IOException, ExecutionException, InterruptedException {
         List<String> uris = htmlParser.parseChapterUris(urlReader.read(PREFIX + novelIndex), novelIndex);
-        String content = content(uris);
-        new NovelWriter("./a.txt").write(content);
+        String contents = parseContentsFrom(uris);
+        new NovelWriter("./a.txt").write(contents);
     }
 
-    private String content(List<String> uris) throws InterruptedException, ExecutionException {
+    private String parseContentsFrom(List<String> uris) throws InterruptedException, ExecutionException {
         final ForkJoinPool pool = new ForkJoinPool(PARALLELISM_LEVEL);
         return pool.submit(() -> uris.parallelStream()
                 .map(uri -> PREFIX + uri)
@@ -35,7 +35,7 @@ public class Crawler {
                     try {
                         log.info("正在爬取 {}", url);
                         return htmlParser.parseContent(urlReader.read(url));
-                    } catch (IOException ex) {
+                    } catch (IOException | UrlCannotConnectException ex) {
                         ex.printStackTrace();
                     }
                     return "";
