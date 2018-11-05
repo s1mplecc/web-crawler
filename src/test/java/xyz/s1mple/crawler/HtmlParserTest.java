@@ -2,10 +2,7 @@ package xyz.s1mple.crawler;
 
 import org.junit.jupiter.api.Test;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -15,13 +12,14 @@ class HtmlParserTest {
     private BufferedReader br2;
 
     @org.junit.jupiter.api.BeforeEach
-    void setUp() throws FileNotFoundException {
+    void setUp() throws FileNotFoundException, UnsupportedEncodingException {
         br1 = bufferReaderBy("test-parseChapterUris.html");
         br2 = bufferReaderBy("test-parseContent.html");
     }
 
-    private BufferedReader bufferReaderBy(String filename) throws FileNotFoundException {
-        return new BufferedReader(new FileReader(HtmlParserTest.class.getClassLoader().getResource(filename).getPath()));
+    private BufferedReader bufferReaderBy(String filename) throws FileNotFoundException, UnsupportedEncodingException {
+        return new BufferedReader(new InputStreamReader(new FileInputStream(
+                new File(HtmlParserTest.class.getClassLoader().getResource(filename).getPath())), "GBK"));
     }
 
     @org.junit.jupiter.api.AfterEach
@@ -40,10 +38,10 @@ class HtmlParserTest {
     }
 
     @Test
-    void should_parse_novel_content_from_html() throws IOException {
+    void should_parse_novel_content_from_html() {
         String content = HtmlParser.parseContent(br2);
 
         assertThat(content).isNotEmpty();
-        assertThat(content.startsWith("    ")).isTrue();
+        assertThat(content).startsWith("    炎炎夏日");
     }
 }
