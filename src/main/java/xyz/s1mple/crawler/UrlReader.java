@@ -9,25 +9,20 @@ import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
 
-public class Connector {
-    private static final Logger log = LoggerFactory.getLogger(Connector.class);
-
+public class UrlReader {
+    private static final Logger log = LoggerFactory.getLogger(UrlReader.class);
     private static final String GBK = "GBK";
 
-    public Connector() {
+    public UrlReader() {
     }
 
-    public BufferedReader read(String url) {
-        URLConnection connection;
+    public BufferedReader read(String url) throws UrlCannotConnectException {
         try {
-            connection = connect(url);
-            return new BufferedReader(new InputStreamReader(connection.getInputStream(), GBK));
-        } catch (IOException e) {
+            return new BufferedReader(new InputStreamReader(connect(url).getInputStream(), GBK));
+        } catch (IOException ex) {
             log.error("can not to connect url: {}", url);
-            e.printStackTrace();
+            throw new UrlCannotConnectException(url, ex);
         }
-
-        return null;
     }
 
     private URLConnection connect(String novelUrl) throws IOException {
@@ -35,7 +30,6 @@ public class Connector {
         URLConnection connection = url.openConnection();
         connection.addRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 6.1; WOW64; rv:25.0) Gecko/20100101 Firefox/25.0");
         connection.connect();
-
         return connection;
     }
 }
