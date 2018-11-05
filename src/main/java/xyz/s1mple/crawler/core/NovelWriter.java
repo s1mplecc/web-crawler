@@ -5,13 +5,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 public class NovelWriter {
-    private String pathname;
-
-    public NovelWriter(String pathname) {
-        this.pathname = pathname;
-    }
-
-    public void write(String content) throws IOException {
+    public void write(String content, String pathname) throws IOException {
         FileWriter fw = new FileWriter(new File(pathname));
         fw.write(content);
         fw.flush();

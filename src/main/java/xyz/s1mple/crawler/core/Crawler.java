@@ -17,18 +17,19 @@ public class Crawler {
 
     private final UrlReader urlReader;
     private final HtmlParser htmlParser;
+    private final NovelWriter novelWriter;
 
     public Crawler() {
         urlReader = new UrlReader();
         htmlParser = new HtmlParser();
+        novelWriter = new NovelWriter();
     }
 
     public void run(String novelIndex) throws IOException, ExecutionException, InterruptedException {
         BufferedReader directoryHtml = urlReader.read(PREFIX + novelIndex);
-        String title = htmlParser.parseTitle(directoryHtml);
         List<String> uris = htmlParser.parseChapterUris(directoryHtml, novelIndex);
         String contents = parseContentsFrom(uris);
-        new NovelWriter(String.format("./%s.txt", title)).write(contents);
+        novelWriter.write(contents, String.format("./%s.txt", htmlParser.parseTitle(directoryHtml)));
     }
 
     private String parseContentsFrom(List<String> uris) throws InterruptedException, ExecutionException {
