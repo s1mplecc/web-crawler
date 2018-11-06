@@ -15,11 +15,11 @@ public class UrlReader {
     private static final Logger log = LoggerFactory.getLogger(UrlReader.class);
     private static final String GBK = "GBK";
 
-    public UrlReader() {
-    }
-
     public List<String> read(String url) throws UrlCannotConnectException {
+        long before = System.currentTimeMillis();
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(connect(url).getInputStream(), GBK))) {
+            long after = System.currentTimeMillis();
+            log.debug("connect to url {} using {} ms", url, after - before);
             return reader.lines().collect(Collectors.toList());
         } catch (IOException e) {
             log.error("can not to connect url: {}", url);

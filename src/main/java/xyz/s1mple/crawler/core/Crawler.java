@@ -10,7 +10,7 @@ import java.util.concurrent.ForkJoinPool;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class Crawler {
-    private static final Logger log = LoggerFactory.getLogger(HtmlParser.class);
+    private static final Logger log = LoggerFactory.getLogger(Crawler.class);
     private static final String PREFIX = "http://www.biquge.cm/";
     private static final int PARALLELISM_LEVEL = 200;
 
