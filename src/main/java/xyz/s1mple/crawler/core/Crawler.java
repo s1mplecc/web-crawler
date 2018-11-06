@@ -12,7 +12,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class Crawler {
     private static final Logger log = LoggerFactory.getLogger(Crawler.class);
     private static final String PREFIX = "http://www.biquge.cm/";
-    private static final int PARALLELISM_LEVEL = 200;
+    private static final int PARALLELISM_LEVEL = 32;
 
     private final UrlReader urlReader;
     private final HtmlParser htmlParser;
