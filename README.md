@@ -2,11 +2,13 @@
 
 Java 网站爬虫，可以爬取 http://www.biquge.cm/ 上的小说，基于之前的 [WebScraping_v2.0](https://github.com/s1mplecc/WebScraping_v2.0) 项目进行重构。
 
+关于该爬虫，我写了一篇博客 [Java 网络爬虫](https://s1mple.xyz/java-web-crawler/)
+
 ## 更新内容
 
 1. 使用 Gradle 构建项目
 	```
-	xyz.s1mple.crawler:web-crawler:1.0-SNAPSHOT
+	xyz.s1mple.crawler:web-crawler:1.0
 	```
 2. 使用 JDK8 的 `parallelStream` 并行流处理，并使用 `new ForkJoinPool(PARALLELISM_LEVEL);` 自定义线程数。经测试，在网络稳定的情况下，爬取两千章的小说大概耗时在 20s 左右（受网速影响）。
 
