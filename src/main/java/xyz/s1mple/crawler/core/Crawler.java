@@ -27,13 +27,13 @@ public class Crawler {
 
     public void run(String novelIndex) throws IOException, ExecutionException, InterruptedException {
         BufferedReader directoryHtml = urlReader.read(PREFIX + novelIndex);
-        String title = htmlParser.parseTitle(directoryHtml);
-        List<String> uris = htmlParser.parseChapterUris(directoryHtml, novelIndex);
-        String contents = parseContentsFrom(uris);
+        String title = htmlParser.titleFrom(directoryHtml);
+        List<String> uris = htmlParser.chapterUrisFrom(directoryHtml, novelIndex);
+        String contents = contentsFrom(uris);
         novelWriter.write(contents, String.format("./%s.txt", title));
     }
 
-    private String parseContentsFrom(List<String> uris) throws InterruptedException, ExecutionException {
+    private String contentsFrom(List<String> uris) throws InterruptedException, ExecutionException {
         final ForkJoinPool pool = new ForkJoinPool(PARALLELISM_LEVEL);
         AtomicInteger i = new AtomicInteger(1);
         return pool.submit(() -> uris.parallelStream()
@@ -41,7 +41,7 @@ public class Crawler {
                 .map(url -> {
                     try {
                         log.info("Crawling {}/{}: {}", i.getAndIncrement(), uris.size(), url);
-                        return htmlParser.parseContent(urlReader.read(url));
+                        return htmlParser.contentFrom(urlReader.read(url));
                     } catch (IOException | UrlCannotConnectException ex) {
                         ex.printStackTrace();
                     }

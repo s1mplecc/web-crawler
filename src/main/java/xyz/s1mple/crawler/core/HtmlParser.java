@@ -16,7 +16,7 @@ public class HtmlParser {
     // todo: close br; readLine -> parallelStream
 
 
-    public String parseTitle(BufferedReader html) throws IOException {
+    public String titleFrom(BufferedReader html) throws IOException {
         String line;
         while ((line = html.readLine()) != null) {
             if (line.trim().matches(H1 + "\\S*" + H1_END)) {
@@ -26,7 +26,7 @@ public class HtmlParser {
         return "";
     }
 
-    public List<String> parseChapterUris(BufferedReader html, String novelIndex) throws IOException {
+    public List<String> chapterUrisFrom(BufferedReader html, String novelIndex) throws IOException {
         List<String> uris = new ArrayList<>();
         boolean isUris = false;
         String line;
@@ -49,7 +49,7 @@ public class HtmlParser {
         return uris;
     }
 
-    public String parseContent(BufferedReader html) throws IOException {
+    public String contentFrom(BufferedReader html) throws IOException {
         StringBuilder content = new StringBuilder();
         boolean isContent = false;
         String line;
