@@ -13,6 +13,9 @@ public class HtmlParser {
     private static final String H1 = "<h1>";
     private static final String H1_END = "</h1>";
 
+    // todo: close br; readLine -> parallelStream
+
+
     public String parseTitle(BufferedReader html) throws IOException {
         String line;
         while ((line = html.readLine()) != null) {

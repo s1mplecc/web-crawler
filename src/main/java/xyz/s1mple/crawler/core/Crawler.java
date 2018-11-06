@@ -27,9 +27,10 @@ public class Crawler {
 
     public void run(String novelIndex) throws IOException, ExecutionException, InterruptedException {
         BufferedReader directoryHtml = urlReader.read(PREFIX + novelIndex);
+        String title = htmlParser.parseTitle(directoryHtml);
         List<String> uris = htmlParser.parseChapterUris(directoryHtml, novelIndex);
         String contents = parseContentsFrom(uris);
-        novelWriter.write(contents, String.format("./%s.txt", htmlParser.parseTitle(directoryHtml)));
+        novelWriter.write(contents, String.format("./%s.txt", title));
     }
 
     private String parseContentsFrom(List<String> uris) throws InterruptedException, ExecutionException {

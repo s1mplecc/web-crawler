@@ -7,7 +7,7 @@ import java.util.concurrent.ExecutionException;
 
 public class CrawlerUI {
     public static void main(String[] args) throws IOException, ExecutionException, InterruptedException {
-        String index = "0/68";
+        String index = "12/12367";
         new Crawler().run(index);
     }
 }
