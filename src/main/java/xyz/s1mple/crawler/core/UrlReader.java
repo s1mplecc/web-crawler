@@ -8,7 +8,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
-import java.util.stream.Stream;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class UrlReader {
     private static final Logger log = LoggerFactory.getLogger(UrlReader.class);
@@ -17,9 +18,9 @@ public class UrlReader {
     public UrlReader() {
     }
 
-    public Stream<String> read(String url) throws UrlCannotConnectException {
+    public List<String> read(String url) throws UrlCannotConnectException {
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(connect(url).getInputStream(), GBK))) {
-            return reader.lines();
+            return reader.lines().collect(Collectors.toList());
         } catch (IOException e) {
             log.error("can not to connect url: {}", url);
             throw new UrlCannotConnectException(url);
