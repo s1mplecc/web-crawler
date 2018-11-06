@@ -26,10 +26,8 @@ public class Crawler {
 
     public void run(String index) throws IOException, ExecutionException, InterruptedException {
         List<String> directoryHtml = urlReader.read(PREFIX + index);
-        String title = htmlParser.titleFrom(directoryHtml, index);
         List<String> uris = htmlParser.chapterUrisFrom(directoryHtml, index);
-        String contents = contentsFrom(uris);
-        novelWriter.write(contents, String.format("./%s.txt", title));
+        novelWriter.write(contentsFrom(uris), String.format("./%s.txt", htmlParser.titleFrom(directoryHtml, index)));
     }
 
     private String contentsFrom(List<String> uris) throws InterruptedException, ExecutionException {
@@ -41,7 +39,7 @@ public class Crawler {
                     try {
                         log.info("Crawling {}/{}: {}", i.getAndIncrement(), uris.size(), url);
                         return htmlParser.contentFrom(urlReader.read(url));
-                    } catch (IOException | UrlCannotConnectException ex) {
+                    } catch (UrlCannotConnectException ex) {
                         ex.printStackTrace();
                     }
                     return "";

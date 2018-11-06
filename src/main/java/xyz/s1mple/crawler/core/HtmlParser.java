@@ -1,6 +1,5 @@
 package xyz.s1mple.crawler.core;
 
-import java.io.IOException;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.stream.Collectors;
@@ -28,7 +27,7 @@ public class HtmlParser {
                 .collect(Collectors.toList());
     }
 
-    public String contentFrom(List<String> contentHtml) throws IOException {
+    public String contentFrom(List<String> contentHtml) {
         AtomicBoolean isContent = new AtomicBoolean(false);
         return contentHtml.stream()
                 .reduce("", (x, y) -> {
