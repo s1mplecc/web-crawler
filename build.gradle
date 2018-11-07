@@ -19,7 +19,7 @@ group 'xyz.s1mple.crawler'
 version '2.0-SNAPSHOT'
 
 sourceCompatibility = 1.8
-mainClassName = "xyz.s1mple.crawler.CrawlerUI"
+mainClassName = 'xyz.s1mple.crawler.WebCrawlerApplication'
 
 repositories {
     mavenLocal()
@@ -31,15 +31,8 @@ dependencies {
     testRuntimeOnly('org.junit.jupiter:junit-jupiter-engine:5.3.1')
     testCompile('org.assertj:assertj-core:3.11.1')
     compile('org.slf4j:slf4j-api:1.7.25')
-    runtime('org.slf4j:slf4j-simple:1.7.25')
-    implementation('org.springframework.boot:spring-boot-starter') {
-        exclude module: "spring-boot-starter-logging"
-        exclude module: "logback-classic"
-    }
-    implementation('org.springframework.boot:spring-boot-starter-web') {
-        exclude module: "spring-boot-starter-logging"
-        exclude module: "logback-classic"
-    }
+    implementation('org.springframework.boot:spring-boot-starter')
+    implementation('org.springframework.boot:spring-boot-starter-web')
     testImplementation('org.springframework.boot:spring-boot-starter-test')
 }
 
