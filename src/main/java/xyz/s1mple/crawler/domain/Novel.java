@@ -30,15 +30,7 @@ public class Novel {
         return title;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
     public String contents() {
         return contents;
-    }
-
-    public void setContents(String contents) {
-        this.contents = contents;
     }
 }

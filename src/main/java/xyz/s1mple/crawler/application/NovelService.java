@@ -2,7 +2,7 @@ package xyz.s1mple.crawler.application;
 
 import org.springframework.stereotype.Service;
 import xyz.s1mple.crawler.domain.Novel;
-import xyz.s1mple.crawler.interfaces.Parser;
+import xyz.s1mple.crawler.interfaces.NovelParser;
 import xyz.s1mple.crawler.interfaces.Reader;
 
 import javax.annotation.Resource;
@@ -16,7 +16,7 @@ public class NovelService {
     @Resource
     private Reader reader;
     @Resource
-    private Parser parser;
+    private NovelParser parser;
 
     public void crawl(String index) throws IOException, ExecutionException, InterruptedException {
         List<String> directoryHtml = reader.from(index);

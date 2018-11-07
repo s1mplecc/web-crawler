@@ -4,7 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 import xyz.s1mple.crawler.application.exceptions.UrlCannotConnectException;
-import xyz.s1mple.crawler.interfaces.Parser;
+import xyz.s1mple.crawler.interfaces.NovelParser;
 import xyz.s1mple.crawler.interfaces.Reader;
 
 import javax.annotation.Resource;
@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 import static xyz.s1mple.crawler.domain.HtmlParser.HtmlTag.*;
 
 @Component
-public class HtmlParser implements Parser {
+public class HtmlParser implements NovelParser {
     private static final Logger log = LoggerFactory.getLogger(HtmlParser.class);
     private static final int PARALLELISM_LEVEL = 32;
 
@@ -60,14 +60,16 @@ public class HtmlParser implements Parser {
                 .get();
     }
 
-    private List<String> chapterUrisFrom(List<String> directoryHtml, String index) {
+    @Override
+    public List<String> chapterUrisFrom(List<String> directoryHtml, String index) {
         return directoryHtml.parallelStream()
                 .filter(line -> line.matches(".*" + A_HREF + index + ".*"))
                 .map(line -> line.substring(line.indexOf(A_HREF + index) + A_HREF.length(), line.indexOf("\">")))
                 .collect(Collectors.toList());
     }
 
-    private String contentFrom(List<String> contentHtml) {
+    @Override
+    public String contentFrom(List<String> contentHtml) {
         AtomicBoolean isContent = new AtomicBoolean(false);
         return contentHtml.stream()
                 .reduce("", (x, y) -> {
