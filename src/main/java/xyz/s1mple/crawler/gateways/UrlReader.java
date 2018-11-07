@@ -1,7 +1,9 @@
-package xyz.s1mple.crawler.core;
+package xyz.s1mple.crawler.gateways;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import xyz.s1mple.crawler.application.exceptions.UrlCannotConnectException;
+import xyz.s1mple.crawler.interfaces.Reader;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -11,10 +13,11 @@ import java.net.URLConnection;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class UrlReader {
+public class UrlReader implements Reader {
     private static final Logger log = LoggerFactory.getLogger(UrlReader.class);
     private static final String GBK = "GBK";
 
+    @Override
     public List<String> read(String url) throws UrlCannotConnectException {
         long before = System.currentTimeMillis();
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(connect(url).getInputStream(), GBK))) {

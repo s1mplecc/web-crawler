@@ -2,7 +2,7 @@ package xyz.s1mple.crawler;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import xyz.s1mple.crawler.core.HtmlParser;
+import xyz.s1mple.crawler.domain.HtmlParser;
 
 import java.io.*;
 import java.util.List;

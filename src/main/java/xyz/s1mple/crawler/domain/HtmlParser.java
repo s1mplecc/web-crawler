@@ -1,15 +1,13 @@
-package xyz.s1mple.crawler.core;
+package xyz.s1mple.crawler.domain;
 
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.stream.Collectors;
 
+import static xyz.s1mple.crawler.domain.HtmlParser.HtmlTag.*;
+
+
 public class HtmlParser {
-    private static final String DIV_CONTENT = "<div id=\"content\">";
-    private static final String A_HREF = "<a href=\"/";
-    private static final String DIV_END = "</div>";
-    private static final String H1 = "<h1>";
-    private static final String H1_END = "</h1>";
 
     public String titleFrom(List<String> directoryHtml, String index) {
         return directoryHtml.parallelStream()
@@ -46,5 +44,13 @@ public class HtmlParser {
                 })
                 .replaceAll("&nbsp;", " ")
                 .replaceAll("<br\\s*/>", "\r\n");
+    }
+
+    static class HtmlTag {
+        static final String DIV_CONTENT = "<div id=\"content\">";
+        static final String A_HREF = "<a href=\"/";
+        static final String DIV_END = "</div>";
+        static final String H1 = "<h1>";
+        static final String H1_END = "</h1>";
     }
 }
