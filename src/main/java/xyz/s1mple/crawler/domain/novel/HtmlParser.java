@@ -2,6 +2,7 @@ package xyz.s1mple.crawler.domain.novel;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import xyz.s1mple.crawler.application.exceptions.UrlCannotConnectException;
 import xyz.s1mple.crawler.interfaces.NovelParser;
@@ -20,7 +21,9 @@ import static xyz.s1mple.crawler.domain.novel.HtmlParser.HtmlTag.*;
 @Component
 public class HtmlParser implements NovelParser {
     private static final Logger log = LoggerFactory.getLogger(HtmlParser.class);
-    private static final int PARALLELISM_LEVEL = 32;
+
+    @Value("${parallelism-level}")
+    private int parallelism;
 
     @Resource
     private Reader reader;
@@ -43,7 +46,7 @@ public class HtmlParser implements NovelParser {
     @Override
     public String contentsFrom(List<String> directoryHtml, String index) throws InterruptedException, ExecutionException {
         List<String> uris = chapterUrisFrom(directoryHtml, index);
-        final ForkJoinPool pool = new ForkJoinPool(PARALLELISM_LEVEL);
+        final ForkJoinPool pool = new ForkJoinPool(parallelism);
         AtomicInteger i = new AtomicInteger(1);
         return pool.submit(() -> uris.parallelStream()
                 .map(url -> {
