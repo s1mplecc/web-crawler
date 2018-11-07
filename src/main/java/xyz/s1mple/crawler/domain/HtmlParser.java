@@ -26,6 +26,11 @@ public class HtmlParser implements Parser {
     private Reader reader;
 
     @Override
+    public Novel novelFrom(List<String> directoryHtml, String index) throws ExecutionException, InterruptedException {
+        return new Novel(index, titleFrom(directoryHtml, index), contentsFrom(directoryHtml, index));
+    }
+
+    @Override
     public String titleFrom(List<String> directoryHtml, String index) {
         return directoryHtml.parallelStream()
                 .map(String::trim)
