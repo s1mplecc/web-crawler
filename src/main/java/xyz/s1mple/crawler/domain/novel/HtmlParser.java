@@ -1,4 +1,4 @@
-package xyz.s1mple.crawler.domain;
+package xyz.s1mple.crawler.domain.novel;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,7 +15,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
-import static xyz.s1mple.crawler.domain.HtmlParser.HtmlTag.*;
+import static xyz.s1mple.crawler.domain.novel.HtmlParser.HtmlTag.*;
 
 @Component
 public class HtmlParser implements NovelParser {

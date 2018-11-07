@@ -1,4 +1,4 @@
-package xyz.s1mple.crawler.domain;
+package xyz.s1mple.crawler.domain.novel;
 
 import java.io.File;
 import java.io.FileWriter;

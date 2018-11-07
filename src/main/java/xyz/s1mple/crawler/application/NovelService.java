@@ -1,7 +1,7 @@
 package xyz.s1mple.crawler.application;
 
 import org.springframework.stereotype.Service;
-import xyz.s1mple.crawler.domain.Novel;
+import xyz.s1mple.crawler.domain.novel.Novel;
 import xyz.s1mple.crawler.interfaces.NovelParser;
 import xyz.s1mple.crawler.interfaces.Reader;
 
