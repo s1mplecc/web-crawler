@@ -2,6 +2,7 @@ package xyz.s1mple.crawler.gateways;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
 import xyz.s1mple.crawler.application.exceptions.UrlCannotConnectException;
 import xyz.s1mple.crawler.interfaces.Reader;
 
@@ -13,16 +14,19 @@ import java.net.URLConnection;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Component
 public class UrlReader implements Reader {
     private static final Logger log = LoggerFactory.getLogger(UrlReader.class);
+
+    private static final String PREFIX = "http://www.biquge.cm/";
     private static final String GBK = "GBK";
 
     @Override
-    public List<String> read(String url) throws UrlCannotConnectException {
+    public List<String> from(String uri) throws UrlCannotConnectException {
+        String url = PREFIX + uri;
         long before = System.currentTimeMillis();
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(connect(url).getInputStream(), GBK))) {
-            long after = System.currentTimeMillis();
-            log.debug("connect to url {} using {} ms", url, after - before);
+            log.debug("connect to url {} using {} ms", url, System.currentTimeMillis() - before);
             return reader.lines().collect(Collectors.toList());
         } catch (IOException e) {
             log.error("can not to connect url: {}", url);
