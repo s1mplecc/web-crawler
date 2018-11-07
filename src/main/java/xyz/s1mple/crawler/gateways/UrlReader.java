@@ -26,7 +26,7 @@ public class UrlReader implements Reader {
         String url = PREFIX + uri;
         long before = System.currentTimeMillis();
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(connect(url).getInputStream(), GBK))) {
-            log.debug("connect to url {} using {} ms", url, System.currentTimeMillis() - before);
+            log.info("connect to url {} using {} ms", url, System.currentTimeMillis() - before);
             return reader.lines().collect(Collectors.toList());
         } catch (IOException e) {
             log.error("can not to connect url: {}", url);

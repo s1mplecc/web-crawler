@@ -18,9 +18,10 @@ public class NovelService {
     @Resource
     private NovelParser parser;
 
-    public void crawl(String index) throws IOException, ExecutionException, InterruptedException {
+    public String crawl(String index) throws IOException, ExecutionException, InterruptedException {
         List<String> directoryHtml = reader.from(index);
         Novel novel = parser.novelFrom(directoryHtml, index);
         novel.write();
+        return novel.contents();
     }
 }
