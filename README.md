@@ -4,9 +4,17 @@ Java 网站爬虫，可以爬取 http://www.biquge.cm/ 上的小说，基于之�
 
 详细内容见我的博客 [Java 网络爬虫](https://s1mple.xyz/java-web-crawler/)
 
-## v2.0 is comming soon
+## Python 版本
 
-基于 Spring Boot 的 Web 项目，包括前段项目 **web-crawler-ui**，目前正在 master 分支上进行 2.0-SNAPSHOT 的开发
+Python 版本请见 [crawler.py](https://gist.github.com/s1mplecc/dfd15f58cbbe5fad2ab13bc2246d49f4)
+
+## v2.0
+
+```
+git checkout master
+```
+
+基于 Spring Boot 的 Web 项目，启动后访问 `http://localhost:8080/novel?index=12/12456` 下载文件
 
 ## v1.0
 
