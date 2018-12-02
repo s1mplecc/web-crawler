@@ -16,7 +16,7 @@ apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
 
 group 'xyz.s1mple.crawler'
-version '2.0-SNAPSHOT'
+version '2.0'
 
 sourceCompatibility = 1.8
 mainClassName = 'xyz.s1mple.crawler.WebCrawlerApplication'

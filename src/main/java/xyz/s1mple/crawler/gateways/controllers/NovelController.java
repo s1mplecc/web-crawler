@@ -21,7 +21,7 @@ public class NovelController {
     @Resource
     private NovelService novelService;
 
-    @GetMapping("/download")
+    @GetMapping
     public void download(@RequestParam String index, HttpServletResponse response) throws InterruptedException, ExecutionException, IOException {
         Novel novel = novelService.crawl(index);
 
